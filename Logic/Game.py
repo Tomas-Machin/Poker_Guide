@@ -30,7 +30,7 @@ class PokerGame:
 
     def game_information(self):
         print("\nCartas del jugador usuario:")
-        print(f"{self.user.name}: {self.user.position} - {self.user.hand}")
+        print(f"User: {self.user.position} - {self.user.hand}")
 
         print("\nInformación del juego inicialmente:")
         print(self.table.get_table_info())
