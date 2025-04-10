@@ -1,4 +1,4 @@
-from Validations import Validations
+from Logic.Validations import Validations
 
 Poker_positions = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
 

@@ -2,7 +2,7 @@ from Objetcs.Deck import Deck
 from Objetcs.Player import Player
 #from Objetcs.Round import Round
 from Objetcs.Table import Table
-from Validations import Validations
+from Logic.Validations import Validations
 """from deck import Deck
 from player import Player
 from table import Table
