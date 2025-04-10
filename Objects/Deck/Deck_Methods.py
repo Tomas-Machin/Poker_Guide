@@ -1,8 +1,11 @@
 import random
-from Deck import Deck
+from .Deck import Deck
 
-def shuffle(self):
-        random.shuffle(Deck.cards)
+DECK = Deck()
 
-def draw_card(self):
-    return Deck.cards.pop()
+class DeckMethods:
+        def shuffle(self):
+                random.shuffle(DECK.cards)
+
+        def draw_card(self):
+                return DECK.cards.pop()

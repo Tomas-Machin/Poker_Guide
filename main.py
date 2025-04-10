@@ -1,7 +1,7 @@
 from Logic.Game import PokerGame
 from Logic.Bayesian_Network import Network
 
-from Logic.Info_Entry import info_registration
+from Logic.Information import info_registration
 
 if __name__ == "__main__":
     # inicio
