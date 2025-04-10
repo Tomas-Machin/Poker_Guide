@@ -1,4 +1,5 @@
 from Logic.Validations import Validations
+from Algorithms.Bayesian_Network import Network
 
 POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
 
@@ -25,3 +26,31 @@ def info_registration():
     validations.confirm_data()
 
     return user_position, num_players, blinds, user_hand , players_pockets
+
+def firstDecision(user_position, num_players, user_chips, blinds, user_hand):   # de UTG a BB
+    """
+        - Restar dinero de los jugadores 
+            - actualizar dinero de jugadores
+            - actualizar dinero del pot
+        - Quitar jugadores que hacen fold
+        - En caso de raise dar otra vuelta --> LO MAS COMPLICADO
+    """
+    pot_in_bets = []
+    players_left = 0
+    for i in range(0, num_players):
+        if(user_position == POKER_POSITIONS[i]):
+            bynet = Network(user_position, user_chips, blinds, user_hand, players_left)
+            bynet.result_network()
+            bet = float(input(f"Introduce tu apuesta: "))
+            if bet == 0: break
+        else:    
+            bet = float(input(f"Cantidad de apuesta o FOLD (si precede) de la posicion: {POKER_POSITIONS[i]}: "))   # CALL es 0
+            if bet == 0 and POKER_POSITIONS[i] != 'BB': # or bet == ''
+                players_left += 1  # reducir el numero de jugadores
+                print("Players left in the table: ", num_players - players_left)
+
+        pot_in_bets.append(bet)
+
+    return pot_in_bets, players_left
+
+# Resto de decisiones de SB a BU
