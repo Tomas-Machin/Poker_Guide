@@ -1,6 +1,6 @@
 from Logic.Validations import Validations
 
-Poker_positions = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
+POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
 
 def info_registration():
     #user_name = input("Introduce tu nombre: ")
@@ -13,18 +13,15 @@ def info_registration():
         exit('\nLos datos introducidos son inválidos.\n')
 
     user_hand = input("Introduce tu mano con el formato (7H 9C) siendo los palos H, S, C, D (Hearts, Spades, Cloves, Diamonds): ").upper().split()
-
-    # players_pockets = []    # usar un diccionario
-    # for i in range(0, num_players):
-    #     money = input(f"Introduce las ciegas del jugador en la posicion: {Poker_positions[i]}: ")
-    #     players_pockets.append(money)
     
     players_pockets = {"UTG": 0, "MP": 0, "HJ": 0, "CO": 0, "BU": 0, "SB": 0, "BB": 0}
     for i in range(0, num_players):
-        money = input(f"Introduce las ciegas del jugador en la posicion: {Poker_positions[i]}: ")
-        players_pockets[Poker_positions[i]] = money
+        money = input(f"Introduce las ciegas del jugador en la posicion: {POKER_POSITIONS[i]}: ")
+        if money == '': money = 0 
+        if float(money) > 0:
+            players_pockets[POKER_POSITIONS[i]] = money
 
-    validations = Validations()
+    validations = Validations(user_position, num_players, POKER_POSITIONS, blinds, user_hand, players_pockets)
     validations.confirm_data()
 
     return user_position, num_players, blinds, user_hand , players_pockets
