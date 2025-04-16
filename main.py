@@ -9,6 +9,7 @@ if __name__ == "__main__":
     user_position, num_players, blinds, user_hand, players_pockets = info_registration()
     game = PokerGame(user_position, num_players, blinds, user_hand, players_pockets)
     game.start_game()
-    result = firstRoundDecisions(num_players, blinds)
+    game.game_information()
+    result = firstRoundDecisions(num_players, blinds, user_position)
     print(f"El bote final es de {round(result, 2)}.")
-    #game.game_information()
+    # INFORMACION DE CADA RONDA

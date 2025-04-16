@@ -1,9 +1,13 @@
 POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
 REARRANGE_POSITIONS = ["SB", "BB", "UTG", "MP", "HJ", "CO", "BU"]
-ROUND = "PREFLOP"
+GAME_ROUNDS = ["PREFLOP", "POSTFLOP", "TURN", "RIVER"]
 
-def firstRoundDecisions(num_players, blinds):
-    pot_in_bets, players_left, actions = playerAction(num_players, blinds)
+from Information import info_registration
+USER_POSITION, NUM_PLAYERS, BLINDS, USER_HAND, PLAYERS_POCKETS = info_registration()
+
+def firstRoundDecisions(num_players, blinds, user_position):
+    print(f"Ronda {GAME_ROUNDS[0]}.")
+    pot_in_bets, players_left, actions = playerAction(num_players, blinds, user_position)
     roundResult(pot_in_bets, actions, players_left, blinds) 
     return sum(pot_in_bets)
 
@@ -12,12 +16,15 @@ def nextRoundsDecisions(players_left, pot_in_bets, actions, blinds):
     roundResult(pot_in_bets, actions, players_left, blinds) 
     return sum(pot_in_bets)
 
-def playerAction(num_players, blinds):
+def playerAction(num_players, blinds, user_position):
     players_left = 0
-    if ROUND == "PREFLOP":
+    if GAME_ROUNDS[0] == "PREFLOP":
         pot_in_bets, actions = basePot_ActionsTable(num_players, blinds)
 
     for i in range(0, num_players):
+        if (POKER_POSITIONS[i] == user_position):
+            bynet = Network(user_position, user_chips, blinds, user_hand, players_left)
+            bynet.result_network()
         bet = input(f"Cantidad de apuesta (vacío - FOLD) de la posicion: {POKER_POSITIONS[i]}: ")
         
         actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i)
@@ -111,8 +118,8 @@ def roundResult(pot_in_bets, actions, players_left, blinds):
                 # nextRound(pot_in_bets, players_left)
 
         if result == 'Next Round':
-            print("Se ha pasado de ronda.")
-            #nextRoundsDecisions()
+            print(f"Ronda {GAME_ROUNDS[1]}.")
+            #nextRoundsDecisions(players_left, pot_in_bets, actions, blinds)
         else: 
             roundResult(pot_in_bets, actions, players_left, blinds)
 
