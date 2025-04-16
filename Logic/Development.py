@@ -78,4 +78,4 @@ def roundResult(num_players, pot_in_bets, actions, players_left, blinds):
             actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, i)
             roundResult(num_players, pot_in_bets, actions, players_left, blinds)
     else:
-        nextRound()
+        nextRound(pot_in_bets, players_left)
