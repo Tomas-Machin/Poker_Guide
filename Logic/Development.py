@@ -1,14 +1,12 @@
 POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
+ROUND = "PREFLOP"
 
 def playerDecision(num_players, blinds):
-
     pot_in_bets, players_left, actions = playerAction(num_players, blinds)  # first round decision
-
-    roundResult(num_players, pot_in_bets, actions, players_left, blinds)            
+    roundResult(num_players, pot_in_bets, actions, players_left, blinds) 
+    return sum(pot_in_bets)
 
 def playerAction(num_players, blinds):
-    players_left = 0
-
     pot_in_bets, actions = basePot_ActionsTable(num_players, blinds)
 
     for i in range(0, num_players):
@@ -17,7 +15,7 @@ def playerAction(num_players, blinds):
         actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, i)
                 
         print(pot_in_bets, ' | ', actions)
-        players_left = num_players - players_left
+        players_left = num_players - players_left   # solo en la primera ronda -> puedo actualizar la variable num_players
     
     return pot_in_bets, players_left, actions
 
@@ -25,10 +23,10 @@ def basePot_ActionsTable(num_players, blinds):
     pot_in_bets = []
     actions = []
     for i in range(0, num_players):
-        if(i < num_players - 2):
+        if i < num_players - 2:
             pot_in_bets.append(0)
             actions.append('')
-        elif(i == num_players - 2):            
+        elif i == num_players - 2 :            
             pot_in_bets.append(blinds/2)
             actions.append('')
         else:
@@ -38,7 +36,9 @@ def basePot_ActionsTable(num_players, blinds):
     return pot_in_bets, actions
         
 def decisionResult(bet, actions, pot_in_bets, blinds, i):
+    players_left = 0
     max_bet = blinds
+
     if bet == '':
         actions[i] = "FOLD"
         players_left += 1
@@ -65,17 +65,24 @@ def decisionResult(bet, actions, pot_in_bets, blinds, i):
     return actions, pot_in_bets, players_left
 
 def nextRound():
+    print("Se h pasado de ronda.")
     return
 
 def roundResult(num_players, pot_in_bets, actions, players_left, blinds):
-    if POKER_POSITIONS.count("CALL") == 1:
+    if actions.count("CALL") == 1:
         print(f"Ha ganado la posición {POKER_POSITIONS[actions.index("CALL")]}.")
-    elif POKER_POSITIONS.count("RAISE") == 1:
+    elif actions.count("RAISE") == 1:
         print(f"Ha ganado la posición {POKER_POSITIONS[actions.index("RAISE")]}.")
-    elif(pot_in_bets[i] < max(pot_in_bets) and actions[i] != "FOLD"):
+    else:    
+        print("Se vuelven a tomar decisiones.")
         for i in range(0, num_players):
-            bet = input(f"Cantidad de apuesta (vacío - FOLD) de la posicion: {POKER_POSITIONS[i]}: ")
-            actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, i)
-            roundResult(num_players, pot_in_bets, actions, players_left, blinds)
-    else:
-        nextRound(pot_in_bets, players_left)
+            # print(i, pot_in_bets[i], max(pot_in_bets), actions[i], num_players)
+            if pot_in_bets[i] < max(pot_in_bets) and actions[i] != "FOLD":
+                if POKER_POSITIONS[i] == "SB" and ROUND == "PREFLOP":
+                    continue
+                bet = input(f"Cantidad de apuesta (vacío - FOLD) de la posicion: {POKER_POSITIONS[i]}: ")
+                actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, i)
+                roundResult(num_players, pot_in_bets, actions, players_left, blinds)
+        else:
+            print("Se ha pasado de ronda.")
+            # nextRound(pot_in_bets, players_left)

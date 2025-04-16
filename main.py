@@ -1,12 +1,14 @@
 from Logic.Game import PokerGame
 #from Logic.Algorithms.Bayesian_Network import Network
 
-from Logic.Information import info_registration, firstDecision
+from Logic.Information import info_registration
+from Logic.Development import playerDecision
 
 if __name__ == "__main__":
     # inicio
     user_position, num_players, blinds, user_hand, players_pockets = info_registration()
     game = PokerGame(user_position, num_players, blinds, user_hand, players_pockets)
     game.start_game()
-    pot_in_bets, players_left = firstDecision(num_players, blinds)
+    result = playerDecision(num_players, blinds)
+    print(f"El bote final es de {result}.")
     #game.game_information()
