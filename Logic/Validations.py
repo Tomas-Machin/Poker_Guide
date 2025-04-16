@@ -28,6 +28,10 @@ class Validations:
         if float(self.players_pockets[self.user_position]) <= 0:
             exit("\nLas fichas de algun jugador no son válidas.\n")
 
+# QUEDAN VALIDACIONES DE LAS APUESTAS E INPUTS DE CADA RONDA
+
+# VER SI HACER UN ARCHIVO CON VARIABLES GLOBALES -> LO MAS OPTIMO SEGURAMENTE
+
     def confirm_data(self):
         self.validate_user_position()
         self.validate_number_of_players()
