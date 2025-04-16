@@ -10,5 +10,5 @@ if __name__ == "__main__":
     game = PokerGame(user_position, num_players, blinds, user_hand, players_pockets)
     game.start_game()
     result = playerDecision(num_players, blinds)
-    print(f"El bote final es de {result}.")
+    print(f"El bote final es de {round(result, 2)}.")
     #game.game_information()
