@@ -1,3 +1,5 @@
+from Objects.Deck.Deck import Deck
+
 class Validations:
     def __init__(self, user_position, num_players, positions, blinds, hand, players_pockets):
         self.num_players = num_players
@@ -20,8 +22,19 @@ class Validations:
             exit("\nLas ciegas introducidas no son válidas.\n")
 
     def validate_user_hand(self):
-        if len(self.hand) != 2 or not (card in self.deck.cards for card in self.hand) or self.hand[0] == self.hand[1]:
-            exit("\nLa mano introducida no son válidas.\n")
+        deck = Deck()
+        if not isinstance(self.hand, list) or len(self.hand) != 2:
+            exit("La mano debe contener exactamente dos cartas.")
+
+        card1 = self.hand[0].strip().upper()
+        card2 = self.hand[1].strip().upper()
+
+        if card1 not in deck.cards:
+            exit(f"{card1} no es una carta válida.")
+        if card2 not in deck.cards:
+            exit(f"{card2} no es una carta válida.")
+        if card1 == card2:
+            exit("Las cartas no pueden ser iguales.")
 
     # Hacer q pueda jugar sin las chips -> hacer q por defecto sean 0 *
     def validate_chips(self):
