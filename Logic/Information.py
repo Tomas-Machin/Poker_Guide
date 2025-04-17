@@ -1,7 +1,7 @@
 from Logic.Validations import Validations
 #from Algorithms.Bayesian_Network import Network
 
-POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]
+POKER_POSITIONS = ["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]   # cambiar a las posiciones de Table
 
 def info_registration():
     try:
