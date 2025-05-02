@@ -114,7 +114,9 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
 
 def roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions):
     result = ''
-    if actions.count("CALL") == 1 and actions.count("FOLD") == len(actions) - 1:
+    if actions.count("FOLD") == len(positions):
+        exit("La partida ha terminado sin ganador.")
+    elif actions.count("CALL") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("CALL")]}.")
     elif actions.count("RAISE") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("RAISE")]}.")
