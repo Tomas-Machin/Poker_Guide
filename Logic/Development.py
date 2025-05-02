@@ -67,22 +67,22 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
             if float(bet) == blinds/2 and max(pot_in_bets) == blinds and positions[index] == 'SB': # or float(bet) + blinds/2 == max_bet:
                 pot_in_bets[index] += float(bet)
                 actions[index] = "CALL"
-                print(f"1-Ha calleado la posición: {positions[index]}.")
+                print(f"Ha calleado la posición: {positions[index]}.")
             elif float(bet) == 0 and max(pot_in_bets) == blinds and positions[index] == 'BB': # or float(bet) + blinds == max_bet:
                 pot_in_bets[index] += float(bet)
                 actions[index] = "CALL"
-                print(f"2-Ha calleado la posición: {positions[index]}.")
+                print(f"Ha calleado la posición: {positions[index]}.")
             # HACER RAISE
             elif float(bet) + pot_in_bets[index] > max_bet:
                 max_bet = float(bet)
                 pot_in_bets[index] += float(bet)
                 actions[index] = "RAISE"
-                print(f"1-Ha raiseado la posición: {positions[index]}.")
+                print(f"Ha raiseado la posición: {positions[index]}.")
             # HACER CALL 
             elif float(bet) + pot_in_bets[index] == max_bet:
                 pot_in_bets[index] += float(bet)
                 actions[index] = "CALL"
-                print(f"3-Ha calleado la posición: {positions[index]}.") 
+                print(f"Ha calleado la posición: {positions[index]}.") 
             else:
                 exit("La apuesta realizada no es valida.")      
                 # dejar tomar la decision otra vez?    
