@@ -26,7 +26,7 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
         if (positions[i] == user_position):
             bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
             bynet.result_network()
-        bet = input(f"Cantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
+        bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
         
         actions, pot_in_bets, players_left = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions)
                 
@@ -114,12 +114,19 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
 
 def roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions):
     result = ''
+    # TODOS FOLDS
     if actions.count("FOLD") == len(positions):
         exit("La partida ha terminado sin ganador.")
+    # UN CALL Y RESTO FOLD
     elif actions.count("CALL") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("CALL")]}.")
+    # UN RAISE Y RESTO FOLD
     elif actions.count("RAISE") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("RAISE")]}.")
+    # DOS CALL O MAS SIN OTRA VUELTA DE DECISIONES
+    elif no_call_before_raise(actions) == False:
+        result = 'Next Round'
+    # OTRA VUELTA DE DECISIONES EN CASO DE RAISE POSTERIOR
     else:    
         print("\nSe vuelven a tomar decisiones.")
         for i in range(0, len(actions)):
@@ -134,14 +141,20 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
             if pot_in_bets.count(max(pot_in_bets)) == actions.count("RAISE") + actions.count("CALL"):
                 result = 'Next Round'
 
-        if result == 'Next Round':
-            positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
-            del GAME_ROUNDS[0]
-            if len(GAME_ROUNDS) == 0:
-                exit("La partida ha terminado.")
-            roundDecisions(players_left, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets)
-        else: 
-            roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions)
+    if result == 'Next Round':
+        positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
+        del GAME_ROUNDS[0]
+        if len(GAME_ROUNDS) == 0:
+            exit("La partida ha terminado.")
+        roundDecisions(players_left, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets)
+    else: 
+        roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions)
+
+def no_call_before_raise(actions):
+    for accion in actions:
+        if accion == 'RAISE':
+            return 'CALL' in actions[:actions.index('RAISE')]
+    return False
 
 def adjustTable(positions, actions, pot_in_bets):
     global FALLEN_POT
