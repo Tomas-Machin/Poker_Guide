@@ -10,6 +10,5 @@ if __name__ == "__main__":
     game = PokerGame(user_position, num_players, blinds, user_hand, players_pockets)
     game.start_game()
     # game.game_information()
-    result = roundDecisions(num_players, blinds, user_position, players_pockets, user_hand, 0, 0, 0)
-    print(f"El bote final es de {round(result, 2)}.")
+    roundDecisions(num_players, blinds, user_position, players_pockets, user_hand, 0, 0, 0)
     # INFORMACION DE CADA RONDA
