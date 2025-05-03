@@ -147,7 +147,7 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
     if result == 'Next Round':
         del GAME_ROUNDS[0]
         if len(GAME_ROUNDS) == 0:
-            exit(f"La partida ha terminado. \nEl bote final es de {sum(pot_in_bets) + sum(pot_in_bets_arranged)}")
+            exit(f"La partida ha terminado. \nEl bote final es de {round(FALLEN_POT + sum(pot_in_bets_arranged), 2)}")  # mal -> suma doble en casos sin folds
         positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
         roundDecisions(players_left, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets)
     else: 
