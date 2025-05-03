@@ -89,10 +89,10 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
         else:   
             # PULIR MUCHO Y VER BIEN Q ES LO Q PASA
             max_bet = 0
-            print("Rondas posteriores: ", bet, previous_bets[index], pot_in_bets[index], index)
+            print("Estado ronda: ", bet, max_bet, previous_bets[index], pot_in_bets[index], index)
             # CHECK
             # if bet == max_bet and previous_bets[index] == pot_in_bets[index]:     # NO ENTRA
-            if (index == 0 and bet == max_bet) or (bet == max_bet and previous_bets[index] == pot_in_bets[index]):
+            if (index == 0 and float(bet) == max_bet) or (float(bet) == max_bet and previous_bets[index] == pot_in_bets[index]):
                 actions[index] = "CHECK"
                 print(f"Ha chequeado la posición: {positions[index]}.")
             # HACER RAISE
