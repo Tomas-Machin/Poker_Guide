@@ -122,7 +122,7 @@ class Network:
         resultado = self.network()
         # Reemplazar valores numéricos por etiquetas
         acciones = ['Fold', 'Check/Call', 'Raise']
-        print(f"Las probabilidades de las jugadas son:")
+        print("\nLas probabilidades de las jugadas son:")
         print("+--------------------+------------------------+")
         print("| DecisionUsuario    |   phi(DecisionUsuario) |")
         print("+====================+========================+")
