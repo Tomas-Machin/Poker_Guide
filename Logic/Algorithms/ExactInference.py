@@ -83,6 +83,7 @@ class Network:
 
         # Generar una matriz de probabilidad aleatoria válida para DecisionUsuario
         num_combinations = 3 * 3 * 2  * 3  # 162 combinaciones posibles de entrada
+        
         values = np.random.rand(3, num_combinations)  # Matriz de valores aleatorios
         values /= values.sum(axis=0)  # Normalizar para que cada columna sume 1
 
