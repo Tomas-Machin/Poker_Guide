@@ -1,4 +1,4 @@
-from Logic.Algorithms.Bayesian_Network import Network
+from Logic.Algorithms.MonteCarlo import MonteCarloInference
 from Objects.Table.Table import Table
 
 GAME_ROUNDS = ["PREFLOP", "POSTFLOP", "TURN", "RIVER"]
@@ -23,8 +23,11 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
     for i in range(0, num_players):
         # print("Jugadores e indice: ", num_players, i)
         if (positions[i] == user_position):
-            bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
-            bynet.result_network()
+            bynet = MonteCarloInference(num_simulations=1000)
+            results = bynet.run_monte_carlo()
+            print("Monte Carlo Bayesian Estimations:")
+            for action, prob in results.items():
+                print(f"{action}: {prob:.2%}")
         bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
         
         actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
@@ -132,8 +135,11 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
         for i in range(0, len(actions)):
             if pot_in_bets[i] < max(pot_in_bets) and actions[i] != "FOLD":
                 if (positions[i] == user_position):
-                    bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
-                    bynet.result_network()
+                    bynet = MonteCarloInference(num_simulations=1000)
+                    results = bynet.run_monte_carlo()
+                    print("Monte Carlo Bayesian Estimations:")
+                    for action, prob in results.items():
+                        print(f"{action}: {prob:.2%}")
                 bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
                 actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
                 print(pot_in_bets, ' | ', actions)
