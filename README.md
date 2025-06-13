@@ -41,15 +41,23 @@ Una vez introducido, el programa deberá tardar unos 20 segundos la primera vez 
 
 2. En la consola se mostrará informacion que el usuario deberá introducir a forma de formulario para poder empezar la partida. Esta información será:
 
-- El numero de jugadores que hay en la mesa (**2 - 7**).
-- Las ciegas de la partida (**>0.02**).
-- La posición en la que se encuentra el usuario **["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]**.
-- La mano del usuario con el formato: **AS 10C** siendo los palos H, S, C, D (Hearts, Spades, Cloves, Diamonds).
-- Las fichas en términos de ciegas de cada jugador (fichas / ciegas de la mesa).
+    - El numero de jugadores que hay en la mesa (**2 - 7**).
+    - Las ciegas de la partida (**>0.02**).
+    - La posición en la que se encuentra el usuario **["UTG", "MP", "HJ", "CO", "BU", "SB", "BB"]**.
+    - La mano del usuario con el formato: **AS 10C** siendo los palos H, S, C, D (Hearts, Spades, Cloves, Diamonds).
+    - Las fichas en términos de ciegas de cada jugador (fichas / ciegas de la mesa).
 
 3. Una vez introducida dicha información la partica comenzará. En la consola aparecerá información sobre la ronda en la que se encuentra y el jugador que esta tomando turno. El usuario deberá introducir las apuestas realizadas por cada jugador.
 
 - ***En caso de ser el turno del usuario, aparecerán una serie de probabilidades en las diferentes acciones que puede realizar. Esa es la ayuda proporcionada por el modelo probabilisico utilizado para poder mejorar la decisión tomada por el usuario.***
+
+    - Las opciones que tiene el usuario En la ronda PREFLOP son:
+    - - Fold: Para hacer fold, el usuario debera dejar vacia la apuesta (dar al botón enter).
+    - - Call: Para hacer call, el jugador deberá igualar la apuesta de la ciega grande.
+    - - Raise: Para hacer raise, el jugador debera apostar una cantidad superior a la anterior apuesta o la de la ciega grande si esta es la mayor.
+    - En las siguientes rondas:
+    - - Fold, Call y Raise: Igual que en la ronda PREFLOP.
+    - - Check: Para hacer check, el jugador deberá hacer una apuesta de 0. Solo es posible hacer check si el jugador de antes ha hecho check o si eres el primero en tomar una decisión en la ronda. 
 
 4. El usuario debera repetir el proceso hasta que se termine la partida. Ya sea por que quede un jugador en la partida o haya u showdown en la ronda final.
 
