@@ -27,6 +27,8 @@ git https://github.com/Tomas-Machin/Poker_Guide.git
 cd Poker_Guide
 ```
 
+---
+
 ## 📖 Manual de usuario
 
 1. Una vez dentro de la carpeta **Poker_Guide** deberá introducir el siguiente comando por el terminal para poder ejecutar el programa:
