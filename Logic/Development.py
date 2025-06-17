@@ -23,7 +23,7 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
     for i in range(0, num_players):
         # print("Jugadores e indice: ", num_players, i)
         if (positions[i] == user_position):
-            bynet = MonteCarloInference(num_simulations=1000)
+            bynet = MonteCarloInference(user_position, players_pockets[user_position], blinds, user_hand, players_left, num_simulations=1000)
             results = bynet.run_monte_carlo()
             print("Monte Carlo Bayesian Estimations:")
             for action, prob in results.items():
@@ -135,7 +135,7 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
         for i in range(0, len(actions)):
             if pot_in_bets[i] < max(pot_in_bets) and actions[i] != "FOLD":
                 if (positions[i] == user_position):
-                    bynet = MonteCarloInference(num_simulations=1000)
+                    bynet = MonteCarloInference(user_position, players_pockets[user_position], blinds, user_hand, players_left, num_simulations=1000)
                     results = bynet.run_monte_carlo()
                     print("Monte Carlo Bayesian Estimations:")
                     for action, prob in results.items():
