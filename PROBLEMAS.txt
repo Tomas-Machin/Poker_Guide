@@ -1,4 +1,0 @@
-- no se suma la apuesta de la BB (SB no se) y hace mal la condicion e imprime CHECK? 
-
-CASO 1:
-    si en la ronda POSTFLOP o posterior si hace check en todas sale un bucle de "Se vuelven a tomar decisiones" y peta
