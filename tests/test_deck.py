@@ -14,6 +14,14 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(deck.cards[0], "2H")
         self.assertEqual(deck.cards[-1], "AD")
 
+    def test_shuffle_changes_order(self):
+        deck_methods = DeckMethods()
+        original_order = DECK.cards.copy()
+        deck_methods.shuffle()
+        shuffled_order = DECK.cards
+        self.assertEqual(len(shuffled_order), 52)
+        self.assertNotEqual(shuffled_order, original_order)
+
 if __name__ == '__main__':
     unittest.main()
 
