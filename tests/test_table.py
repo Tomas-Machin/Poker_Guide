@@ -22,7 +22,12 @@ class TestTable(unittest.TestCase):
             table = Table(self.num_players, self.blinds)
             self.assertEqual(table.positions, positions)
 
+    def test_table_data_assigned(self):
+        table = Table(self.num_players, self.blinds)
+        self.assertEqual(table.poker["Blinds"], self.blinds)
+        self.assertEqual(table.poker["Players"], self.num_players)
 
+    
 
 if __name__ == '__main__':
     unittest.main()
