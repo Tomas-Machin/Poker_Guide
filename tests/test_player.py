@@ -11,10 +11,10 @@ class TestPlayer(unittest.TestCase):
         self.player = Player(self.position, self.hand, self.chips)
 
     def test_player_position_is_valid(self):
-        self.assertIn(self.player.position, self.valid_positions, "Posición no válida")
+        self.assertIn(self.player.position, self.valid_positions)
 
     def test_chips_greater_than_zero(self):
-        self.assertGreater(self.player.chips, 0, "Fichas deben ser > 0")
+        self.assertGreater(self.player.chips, 0)
 
 
 if __name__ == '__main__':
