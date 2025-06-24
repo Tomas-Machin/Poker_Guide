@@ -33,3 +33,4 @@ if __name__ == '__main__':
     unittest.main()
 
 # py -m unittest tests/test_deck.py
+# py -m unittest discover .\tests\Objects\ 
