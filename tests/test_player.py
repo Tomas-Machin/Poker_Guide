@@ -13,6 +13,8 @@ class TestPlayer(unittest.TestCase):
     def test_player_position_is_valid(self):
         self.assertIn(self.player.position, self.valid_positions, "Posición no válida")
 
+    def test_chips_greater_than_zero(self):
+        self.assertGreater(self.player.chips, 0, "Fichas deben ser > 0")
 
 
 if __name__ == '__main__':
