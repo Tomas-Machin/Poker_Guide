@@ -41,6 +41,12 @@ class TestValidations(unittest.TestCase):
         with self.assertRaises(ValueError):
             v.validate_blinds()
 
+    def test_invalid_hand_type_or_length(self):
+        for bad_hand in [["AS"], "AS,KD", ["AS", "KD", "QS"]]:
+            v = self.create_validator({"hand": bad_hand})
+            with self.assertRaises(ValueError):
+                v.validate_user_hand()
+
 
 
 if __name__ == '__main__':
