@@ -47,6 +47,14 @@ class TestValidations(unittest.TestCase):
             with self.assertRaises(ValueError):
                 v.validate_user_hand()
 
+    def test_invalid_cards(self):
+        v1 = self.create_validator({"hand": ["ZZ", "KD"]})
+        v2 = self.create_validator({"hand": ["AS", "AS"]})
+        with self.assertRaises(ValueError):
+            v1.validate_user_hand()
+        with self.assertRaises(ValueError):
+            v2.validate_user_hand()
+
 
 
 if __name__ == '__main__':
