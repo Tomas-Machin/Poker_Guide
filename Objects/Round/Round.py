@@ -11,24 +11,25 @@ class Round:
 
         #objeto variable o hacer un objeto por ronda
         """self.ronda_1 = {
-            "Players left": 1,  # PREFLOP
+            "Players left": W,  # PREFLOP
             "Pot": self.pot,
+            "Community cards": []
         }
 
         self.ronda_2 = {
-            "Players left": 2,  # POSTFLOP
+            "Players left": X,  # POSTFLOP
             "Pot": self.pot,
             "Community cards": self.community_cards
         }
 
         self.ronda_3 = {
-            "Players left": 3,  # TURN
+            "Players left": Y,  # TURN
             "Pot": self.pot,
             "Community cards": self.community_cards
         }
 
         self.ronda_4 = {
-            "Players left": 4,  # RIVER
+            "Players left": Z,  # RIVER
             "Pot": self.pot,
             "Community cards": self.community_cards
         }"""
