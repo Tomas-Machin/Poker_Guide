@@ -31,6 +31,12 @@ class TestValidations(unittest.TestCase):
             with self.assertRaises(ValueError) as e:
                 v.validate_number_of_players()
 
+    def test_invalid_user_position(self):
+        v = self.create_validator({"user_position": "UTG"})
+        with self.assertRaises(ValueError):
+            v.validate_user_position()
+
+
 
 if __name__ == '__main__':
     unittest.main()
