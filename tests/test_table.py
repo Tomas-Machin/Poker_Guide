@@ -27,7 +27,11 @@ class TestTable(unittest.TestCase):
         self.assertEqual(table.poker["Blinds"], self.blinds)
         self.assertEqual(table.poker["Players"], self.num_players)
 
-    
+    def test_table_positions_all_rival_initially(self): 
+        table = Table(self.num_players, self.blinds)
+        for pos, info in table.poker["Positions"].items():
+            self.assertEqual(info, {"name": "Rival"})
+
 
 if __name__ == '__main__':
     unittest.main()
