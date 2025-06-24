@@ -5,7 +5,6 @@ from Objects.Deck.Deck_Methods import DeckMethods, DECK
 class TestDeck(unittest.TestCase):
 
     def setUp(self):
-        # Esto se ejecuta antes de cada test para resetear el mazo
         DECK.cards = [f"{rank}{suit}" for rank in "23456789TJQKA" for suit in "HSCD"]
 
     def test_deck_initialization(self):
@@ -21,6 +20,14 @@ class TestDeck(unittest.TestCase):
         shuffled_order = DECK.cards
         self.assertEqual(len(shuffled_order), 52)
         self.assertNotEqual(shuffled_order, original_order)
+
+    def test_draw_card_reduces_deck(self):
+        deck_methods = DeckMethods()
+        initial_count = len(DECK.cards)
+        card = deck_methods.draw_card()
+        after_draw_count = len(DECK.cards)
+        self.assertIsInstance(card, str)
+        self.assertEqual(after_draw_count, initial_count - 1)
 
 if __name__ == '__main__':
     unittest.main()
