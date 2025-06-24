@@ -32,6 +32,16 @@ class TestTable(unittest.TestCase):
         for pos, info in table.poker["Positions"].items():
             self.assertEqual(info, {"name": "Rival"})
 
+    def test_get_table_info_returns_valid_json(self):
+        table = Table(self.num_players, self.blinds)
+        json_str = table.get_table_info()
+        
+        self.assertIsInstance(json_str, str)
+        data = json.loads(json_str)
+
+        self.assertEqual(data["Blinds"], self.blinds)
+        self.assertEqual(data["Players"], self.num_players)
+        self.assertEqual(set(data["Positions"].keys()), set(table.positions))
 
 if __name__ == '__main__':
     unittest.main()
