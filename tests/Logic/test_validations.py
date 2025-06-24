@@ -55,7 +55,10 @@ class TestValidations(unittest.TestCase):
         with self.assertRaises(ValueError):
             v2.validate_user_hand()
 
-
+    def test_invalid_chips(self):
+        v = self.create_validator({"players_pockets": {"CO": 0}})
+        with self.assertRaises(ValueError):
+            v.validate_chips()
 
 if __name__ == '__main__':
     unittest.main()
