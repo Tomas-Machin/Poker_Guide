@@ -36,6 +36,11 @@ class TestValidations(unittest.TestCase):
         with self.assertRaises(ValueError):
             v.validate_user_position()
 
+    def test_invalid_blinds(self):
+        v = self.create_validator({"blinds": 0.01})
+        with self.assertRaises(ValueError):
+            v.validate_blinds()
+
 
 
 if __name__ == '__main__':
