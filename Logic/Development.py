@@ -6,12 +6,15 @@ FALLEN_POT = 0
 positions_arranged = []
 actions_arranged = []
 pot_in_bets_arranged = []
+communityCards = []
 
 def roundDecisions(num_players, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets):
     if GAME_ROUNDS[0] == 'PREFLOP':
         table_info = Table(num_players, blinds)
         positions = table_info.positions
     print(f"\nRonda {GAME_ROUNDS[0]}.")
+    if GAME_ROUNDS[0] != 'PREFLOP':
+        deal_community_cards()
     pot_in_bets, players_left, actions, round_bets = playerAction(num_players, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets)
     roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions, round_bets)
 
@@ -138,14 +141,14 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
                 actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
                 print(pot_in_bets, ' | ', actions)
             if pot_in_bets.count(max(pot_in_bets)) == actions.count("RAISE") + actions.count("CALL") + actions.count("CHECK"):
-                print(f"result: {result}")
+                # print(f"result: {result}")
                 result = 'Next Round'
                 break
 
     if result == 'Next Round':
         del GAME_ROUNDS[0]
         if len(GAME_ROUNDS) == 0:
-            exit(f"La partida ha terminado. \nEl bote final es de {round(FALLEN_POT + sum(pot_in_bets_arranged), 2)}")  # mal -> suma doble en casos sin folds
+            exit(f"\nLa partida ha terminado. \nEl bote final es de {round(FALLEN_POT + sum(pot_in_bets_arranged), 2)}")  # mal -> suma doble en casos sin folds
         positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
         roundDecisions(players_left, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets)
     else: 
@@ -191,3 +194,14 @@ def adjustTable(positions, actions, pot_in_bets):
 
     return positions_arranged, actions_arranged, pot_in_bets_arranged
         
+def deal_community_cards():
+    global communityCards
+    if GAME_ROUNDS[0] == "POSTFLOP":
+        communityCards = input(f"\nCartas comunitarias de la ronda POSTFLOP: ").upper().split()
+    elif GAME_ROUNDS[0] == "TURN":
+        forthCard = input(f"\nCarta comunitaria de la ronda TURN: ").upper()
+        communityCards.append(forthCard)
+    if GAME_ROUNDS[0] == "RIVER":
+        fifthCard = input(f"\nCarta comunitaria de la ronda RIVER: ").upper()
+        communityCards.append(fifthCard)
+    print(communityCards)
