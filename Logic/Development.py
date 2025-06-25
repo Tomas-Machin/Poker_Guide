@@ -31,7 +31,7 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
                 
         print(pot_in_bets, ' | ', actions, ' | ', positions)
 
-    players_left = num_players - players_left   # SIGUE SIENDO NECESARIO?
+    players_left = num_players - players_left
     # print("Jugadores restantes: ", players_left)
     
     return pot_in_bets, players_left, actions, round_bets
@@ -73,8 +73,8 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
                 print(f"Ha calleado la posición: {positions[index]}.")
             elif float(bet) == 0 and max(pot_in_bets) == blinds and positions[index] == 'BB': # or float(bet) + blinds == max_bet:
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
-                actions[index] = "CHECK"
-                print(f"Ha chequeado la posición: {positions[index]}.")
+                actions[index] = "LIMP"
+                print(f"Ha limpeado la posición: {positions[index]}.")
             # HACER RAISE
             elif round(float(bet) + pot_in_bets[index], 2) > max_bet:
                 max_bet = float(bet)
@@ -102,7 +102,7 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
                 actions[index] = "RAISE"
                 print(f"Ha raiseado la posición: {positions[index]}.")
             # HACER CALL 
-            elif round_bets[index] == round_bets[index - 1]:
+            elif round_bets[index] == max(round_bets):
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "CALL"
                 print(f"Ha calleado la posición: {positions[index]}.") 
