@@ -92,7 +92,7 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
                 actions[index] = "CALL"
                 print(f"Ha calleado la posición: {positions[index]}.") 
             else:
-                exit("La apuesta realizada no es valida.")  
+                raise ValueError("La apuesta realizada no es valida.")  
         else:
             max_bet = max(round_bets)
             round_bets[index] = round(round_bets[index] + float(bet), 2)
@@ -112,7 +112,7 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
                 actions[index] = "CALL"
                 print(f"Ha calleado la posición: {positions[index]}.") 
             else:
-                exit("La apuesta realizada no es valida.")
+                raise ValueError("La apuesta realizada no es valida.")
         
     
     return actions, pot_in_bets, players_left, round_bets
