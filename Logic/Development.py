@@ -3,12 +3,14 @@ from Objects.Table.Table import Table
 
 GAME_ROUNDS = ["PREFLOP", "POSTFLOP", "TURN", "RIVER"]
 FALLEN_POT = 0
+table_info = {}
 positions_arranged = []
 actions_arranged = []
 pot_in_bets_arranged = []
 communityCards = []
 
 def roundDecisions(num_players, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets):
+    global table_info
     if GAME_ROUNDS[0] == 'PREFLOP':
         table_info = Table(num_players, blinds)
         positions = table_info.positions
@@ -198,10 +200,13 @@ def deal_community_cards():
     global communityCards
     if GAME_ROUNDS[0] == "POSTFLOP":
         communityCards = input(f"\nCartas comunitarias de la ronda POSTFLOP: ").upper().split()
+        table_info.poker["Community cards"] = communityCards
     elif GAME_ROUNDS[0] == "TURN":
         forthCard = input(f"\nCarta comunitaria de la ronda TURN: ").upper()
         communityCards.append(forthCard)
+        table_info.poker["Community cards"] = communityCards
     if GAME_ROUNDS[0] == "RIVER":
         fifthCard = input(f"\nCarta comunitaria de la ronda RIVER: ").upper()
         communityCards.append(fifthCard)
+        table_info.poker["Community cards"] = communityCards
     print(communityCards)

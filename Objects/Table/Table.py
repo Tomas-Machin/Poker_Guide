@@ -6,6 +6,7 @@ class Table:
         self.poker = {
             "Blinds": blinds,
             "Players": num_players,
+            "Community cards": [],
             "Positions": {
                 position: {"name": "Rival"} for position in self.positions
             }
