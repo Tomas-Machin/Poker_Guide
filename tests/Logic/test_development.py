@@ -12,6 +12,10 @@ class TestGameDevelopment(unittest.TestCase):
         self.assertEqual(round_bets, [0, 0, 0, 0, 0])
         self.assertEqual(actions, ['', '', '', '', ''])
 
+    def test_call_then_raise(self):
+        actions = ['CALL', 'RAISE']
+        self.assertTrue(no_call_before_raise(actions))
+
 if __name__ == '__main__':
     unittest.main()
 
