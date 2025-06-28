@@ -1,8 +1,10 @@
 import unittest
 from unittest.mock import patch
-from Logic.Development import playerAction
+from Logic.Development import playerAction, roundDecisions, FALLEN_POT, GAME_ROUNDS
+from Objects.Table.Table import Table
 
-class TestPokerGameFlow(unittest.TestCase):
+class TestPokerFlow(unittest.TestCase):
+
     def setUp(self):
         self.num_players = 3
         self.blinds = 0.2
@@ -11,23 +13,48 @@ class TestPokerGameFlow(unittest.TestCase):
         self.user_hand = ["AS", "AC"]
         self.positions = ["BU", "SB", "BB"]
         self.actions = ["", "", ""]
-        self.pot_in_bets = [0, 0, 0]
-        self.round_bets = [0, 0, 0]
+        self.pot_in_bets = []
+        self.round_bets = []
+        self.table = Table(self.num_players, self.blinds)
+        self.positions = self.table.positions
 
-    @patch("builtins.input", side_effect=["0.2", "", "0"])
-    def test_3_player_preflop_call_fold_check(self, mock_input):
-        pot_in_bets, players_left, actions, round_bets = playerAction(
-            self.num_players,
-            self.blinds,
-            self.user_position,
-            self.players_pockets,
-            self.user_hand,
-            self.positions,
-            self.actions,
-            self.pot_in_bets,
-            self.round_bets
+    @patch("builtins.input", side_effect=[
+        "0.2",      # BU -> CALL
+        "",         # SB -> FOLD
+        "0",        # BB -> CHECK
+        "QH 7D 10H", # cartas comunitarias POSTFLOP
+        "0",        # BU -> CHECK (POSTFLOP)
+        "0",        # BB -> CHECK (POSTFLOP)
+        "9C",       # carta comunitaria TURN
+        "0",        # BU -> CHECK (TURN)
+        "0",        # BB -> CHECK (TURN)
+        "8H",       # carta comunitaria RIVER
+        "0",        # BU -> CHECK (RIVER)
+        "0"         # BB -> CHECK (RIVER)
+    ])
+    def test_full_round_with_folds_and_checks(self, mock_input):
+
+        roundDecisions(
+            num_players=self.num_players,
+            blinds=self.blinds,
+            user_position=self.user_position,
+            players_pockets=self.players_pockets,
+            user_hand=self.user_hand,
+            positions=self.positions,
+            actions=self.actions,
+            pot_in_bets=self.pot_in_bets,
+            round_bets=self.round_bets
         )
 
-        self.assertEqual(actions, ["CALL", "FOLD", "CHECK"])
-        self.assertEqual(players_left, 2)
-        self.assertEqual(pot_in_bets, [0.2, 0.1, 0.2])
+        # Comprobamos que la partida termina correctamente - La lista esta vacia
+        self.assertEqual(GAME_ROUNDS, [])
+
+        # Verifica que el FALLEN_POT incluye la ciega pequeña de SB
+        # SB foldeó -> su apuesta cae en el bote muerto
+        expected_fallen_pot = self.blinds / 2  # SB puso 50
+        self.assertEqual(FALLEN_POT, expected_fallen_pot)
+
+        # Verifica que las posiciones vivas son BU y BB (SB foldeó)
+        remaining_positions = ["BU", "BB"]
+        self.assertListEqual(sorted(self.positions[:2]), sorted(remaining_positions))
+
