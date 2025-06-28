@@ -16,6 +16,14 @@ class TestGameDevelopment(unittest.TestCase):
         actions = ['CALL', 'RAISE']
         self.assertTrue(no_call_before_raise(actions))
 
+    def test_raise_then_call(self):
+        actions = ['RAISE', 'CALL']
+        self.assertTrue(no_call_before_raise(actions))
+
+    def test_multiple_raises(self):
+        actions = ['FOLD', 'RAISE', 'RAISE']
+        self.assertTrue(no_call_before_raise(actions))
+
 if __name__ == '__main__':
     unittest.main()
 
