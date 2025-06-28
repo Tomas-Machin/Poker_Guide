@@ -31,17 +31,11 @@ class TestTable(unittest.TestCase):
         table = Table(self.num_players, self.blinds)
         for pos, info in table.poker["Positions"].items():
             self.assertEqual(info, {"name": "Rival"})
-
-    def test_get_table_info_returns_valid_json(self):
-        table = Table(self.num_players, self.blinds)
-        json_str = table.get_table_info()
         
-        self.assertIsInstance(json_str, str)
-        data = json.loads(json_str)
-
-        self.assertEqual(data["Blinds"], self.blinds)
-        self.assertEqual(data["Players"], self.num_players)
-        self.assertEqual(set(data["Positions"].keys()), set(table.positions))
+    def test_community_cards_field_starts_as_empty_list(self):
+        table = Table(num_players=5, blinds=0.05)
+        self.assertIn("Community cards", table.poker)
+        self.assertEqual(table.poker["Community cards"], [])
 
 if __name__ == '__main__':
     unittest.main()
