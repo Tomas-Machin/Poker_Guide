@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from Logic.Development import playerAction, roundDecisions, FALLEN_POT, GAME_ROUNDS
+import Logic.Development as dev   #roundDecisions, FALLEN_POT, GAME_ROUNDS
 from Objects.Table.Table import Table
 
 class TestPokerFlow(unittest.TestCase):
@@ -30,11 +30,11 @@ class TestPokerFlow(unittest.TestCase):
         "0",        # BB -> CHECK (TURN)
         "8H",       # carta comunitaria RIVER
         "0",        # BU -> CHECK (RIVER)
-        "0"         # BB -> CHECK (RIVER)
+        "0"        # BB -> CHECK (RIVER)
     ])
     def test_full_round_with_folds_and_checks(self, mock_input):
-
-        roundDecisions(
+        
+        dev.roundDecisions(
             num_players=self.num_players,
             blinds=self.blinds,
             user_position=self.user_position,
@@ -46,11 +46,11 @@ class TestPokerFlow(unittest.TestCase):
             round_bets=self.round_bets
         )
 
-        self.assertEqual(GAME_ROUNDS, [])
+        self.assertEqual(dev.GAME_ROUNDS, [])
 
         expected_fallen_pot = self.blinds / 2
-        self.assertEqual(FALLEN_POT, expected_fallen_pot)
+        self.assertEqual(dev.FALLEN_POT, expected_fallen_pot)
 
-        remaining_positions = ["BU", "BB"]
-        self.assertListEqual(sorted(self.positions[:2]), sorted(remaining_positions))
+        remaining_positions = ["BB", "BU"]
+        self.assertListEqual(dev.positions_arranged, remaining_positions)
 
