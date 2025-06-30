@@ -46,15 +46,11 @@ class TestPokerFlow(unittest.TestCase):
             round_bets=self.round_bets
         )
 
-        # Comprobamos que la partida termina correctamente - La lista esta vacia
         self.assertEqual(GAME_ROUNDS, [])
 
-        # Verifica que el FALLEN_POT incluye la ciega pequeña de SB
-        # SB foldeó -> su apuesta cae en el bote muerto
-        expected_fallen_pot = self.blinds / 2  # SB puso 50
+        expected_fallen_pot = self.blinds / 2
         self.assertEqual(FALLEN_POT, expected_fallen_pot)
 
-        # Verifica que las posiciones vivas son BU y BB (SB foldeó)
         remaining_positions = ["BU", "BB"]
         self.assertListEqual(sorted(self.positions[:2]), sorted(remaining_positions))
 
