@@ -152,7 +152,7 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
         if len(GAME_ROUNDS) == 0:
             print(f"\nLa partida ha terminado. \nEl bote final es de {round(FALLEN_POT + sum(pot_in_bets_arranged), 2)}")  # mal -> suma doble en casos sin folds
             return
-        positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
+        if GAME_ROUNDS[0] == "POSTFLOP": positions, actions, pot_in_bets = adjustTable(positions, actions, pot_in_bets)
         roundDecisions(players_left, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets)
     else: 
         roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions, round_bets)
@@ -170,16 +170,14 @@ def adjustTable(positions, actions, pot_in_bets):
     global actions_arranged
     global pot_in_bets_arranged
     i = 0
-    
 
-    if FALLEN_POT == 0:
-        inicio = positions.index('SB')
-        empaquetado = list(zip(positions, actions, pot_in_bets))
-        reordenado = empaquetado[inicio:] + empaquetado[:inicio]
-        positions_arranged, actions_arranged, pot_in_bets_arranged = zip(*reordenado)
-        positions_arranged = list(positions_arranged)
-        actions_arranged = list(actions_arranged)
-        pot_in_bets_arranged = list(pot_in_bets_arranged)
+    inicio = positions.index('SB')
+    empaquetado = list(zip(positions, actions, pot_in_bets))
+    reordenado = empaquetado[inicio:] + empaquetado[:inicio]
+    positions_arranged, actions_arranged, pot_in_bets_arranged = zip(*reordenado)
+    positions_arranged = list(positions_arranged)
+    actions_arranged = list(actions_arranged)
+    pot_in_bets_arranged = list(pot_in_bets_arranged)
 
     while i < len(positions_arranged):
         if actions_arranged[i] == "FOLD":
