@@ -18,7 +18,7 @@ class Validations:
             raise ValueError("\nLa posición introducida es inválida o no esta en una mesa de ese tamaño.\n")
 
     def validate_blinds(self):
-        if self.blinds < 0.02: # falla y ns porque - if isinstance(blinds, str) or float(blinds) < 0.02:
+        if self.blinds < 0.02: 
             raise ValueError("\nLas ciegas introducidas no son válidas.\n")
 
     def validate_user_hand(self):
@@ -36,16 +36,9 @@ class Validations:
         if card1 == card2:
             raise ValueError("Las cartas no pueden ser iguales.")
 
-    # Hacer q pueda jugar sin las chips -> hacer q por defecto sean 0 * y de ahi calcular
     def validate_chips(self):
         if float(self.players_pockets[self.user_position]) <= 0:
             raise ValueError("\nLas fichas de algun jugador no son válidas.\n")
-
-# USO raise ValueError() o exit()
-
-# QUEDAN VALIDACIONES DE LAS APUESTAS E INPUTS DE CADA RONDA
-
-# VER SI HACER UN ARCHIVO CON VARIABLES GLOBALES -> LO MAS OPTIMO SEGURAMENTE
 
     def confirm_data(self):
         self.validate_user_position()

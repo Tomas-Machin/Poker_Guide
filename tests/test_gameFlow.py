@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-import Logic.Development as dev   #roundDecisions, FALLEN_POT, GAME_ROUNDS
+import Logic.Development as dev
 from Objects.Table.Table import Table
 
 class TestPokerFlow(unittest.TestCase):
@@ -19,18 +19,18 @@ class TestPokerFlow(unittest.TestCase):
         self.positions = self.table.positions
 
     @patch("builtins.input", side_effect=[
-        "0.2",      # BU -> CALL
-        "",         # SB -> FOLD
-        "0",        # BB -> CHECK
-        "QH 7D 10H", # cartas comunitarias POSTFLOP
-        "0",        # BU -> CHECK (POSTFLOP)
-        "0",        # BB -> CHECK (POSTFLOP)
-        "9C",       # carta comunitaria TURN
-        "0",        # BU -> CHECK (TURN)
-        "0",        # BB -> CHECK (TURN)
-        "8H",       # carta comunitaria RIVER
-        "0",        # BU -> CHECK (RIVER)
-        "0"        # BB -> CHECK (RIVER)
+        "0.2",      
+        "",         
+        "0",        
+        "QH 7D 10H", 
+        "0",        
+        "0",        
+        "9C",       
+        "0",        
+        "0",        
+        "8H",       
+        "0",        
+        "0"        
     ])
     def test_full_round_with_folds_and_checks(self, mock_input):
         

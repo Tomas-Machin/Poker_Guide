@@ -8,28 +8,3 @@ class Round:
             "Pot": self.pot,
             "Community cards": community_cards
         }
-
-        #objeto variable o hacer un objeto por ronda
-        """self.ronda_1 = {
-            "Players left": W,  # PREFLOP
-            "Pot": self.pot,
-            "Community cards": []
-        }
-
-        self.ronda_2 = {
-            "Players left": X,  # POSTFLOP
-            "Pot": self.pot,
-            "Community cards": self.community_cards
-        }
-
-        self.ronda_3 = {
-            "Players left": Y,  # TURN
-            "Pot": self.pot,
-            "Community cards": self.community_cards
-        }
-
-        self.ronda_4 = {
-            "Players left": Z,  # RIVER
-            "Pot": self.pot,
-            "Community cards": self.community_cards
-        }"""

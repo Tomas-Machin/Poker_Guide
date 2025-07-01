@@ -26,18 +26,14 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
         pot_in_bets, round_bets, actions = basePot_ActionsTable(num_players, blinds)
 
     for i in range(0, num_players):
-        # print("Jugadores e indice: ", num_players, i)
         if (positions[i] == user_position):
             bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
             bynet.result_network()
         bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
         
         actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
-                
-        print(pot_in_bets, ' | ', actions, ' | ', positions)
 
     players_left = num_players - players_left
-    # print("Jugadores restantes: ", players_left)
     
     return pot_in_bets, players_left, actions, round_bets
 
@@ -63,7 +59,6 @@ def basePot_ActionsTable(num_players, blinds):
         
 def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, positions, round_bets):
     max_bet = 0
-    # FOLD
     if bet == '':
         actions[index] = "FOLD"
         players_left += 1
@@ -71,22 +66,19 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
     else:
         if GAME_ROUNDS[0] == "PREFLOP":
             max_bet = max(pot_in_bets)
-            # CALL 1º RONDA DE CIEGAS
-            if float(bet) == blinds/2 and max(pot_in_bets) == blinds and positions[index] == 'SB': # or float(bet) + blinds/2 == max_bet:
+            if float(bet) == blinds/2 and max(pot_in_bets) == blinds and positions[index] == 'SB':
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "LIMP"
                 print(f"Ha limpeado la posición: {positions[index]}.")
-            elif float(bet) == 0 and max(pot_in_bets) == blinds and positions[index] == 'BB': # or float(bet) + blinds == max_bet:
+            elif float(bet) == 0 and max(pot_in_bets) == blinds and positions[index] == 'BB':
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "CHECK"
                 print(f"Ha chequeado la posición: {positions[index]}.")
-            # HACER RAISE
             elif round(float(bet) + pot_in_bets[index], 2) > max_bet:
                 max_bet = float(bet)
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "RAISE"
                 print(f"Ha raiseado la posición: {positions[index]}.")
-            # HACER CALL 
             elif round(float(bet) + pot_in_bets[index], 2) == max_bet:
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "CALL"
@@ -96,17 +88,14 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
         else:
             max_bet = max(round_bets)
             round_bets[index] = round(round_bets[index] + float(bet), 2)
-            # CHECK
             if (index == 0 and float(bet) == 0) or (float(bet) == 0 and round_bets[index - 1] == 0):
                 actions[index] = "CHECK"
                 print(f"Ha chequeado la posición: {positions[index]}.")
-            # HACER RAISE
             elif round_bets[index] > max_bet:
                 max_bet = float(bet)
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "RAISE"
                 print(f"Ha raiseado la posición: {positions[index]}.")
-            # HACER CALL 
             elif round_bets[index] == max(round_bets):
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
                 actions[index] = "CALL"
@@ -119,19 +108,14 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
 
 def roundResult(pot_in_bets, actions, players_left, blinds, user_position, players_pockets, user_hand, positions, round_bets):
     result = ''
-    # TODOS FOLDS
     if actions.count("FOLD") == len(positions):
         exit("La partida ha terminado sin ganador.")
-    # UN CALL Y RESTO FOLD
     elif actions.count("CALL") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("CALL")]}.")
-    # UN RAISE Y RESTO FOLD
     elif actions.count("RAISE") == 1 and actions.count("FOLD") == len(actions) - 1:
         print(f"Ha ganado la posición {positions[actions.index("RAISE")]}.")
-    # DOS CALL O MAS SIN OTRA VUELTA DE DECISIONES
     elif no_call_before_raise(actions) == False:
         result = 'Next Round'
-    # OTRA VUELTA DE DECISIONES EN CASO DE RAISE POSTERIOR
     else:    
         print("\nSe vuelven a tomar decisiones.")
         for i in range(0, len(actions)):
@@ -143,7 +127,6 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
                 actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
                 print(pot_in_bets, ' | ', actions)
             if pot_in_bets.count(max(pot_in_bets)) == actions.count("RAISE") + actions.count("CALL") + actions.count("CHECK"):
-                # print(f"result: {result}")
                 result = 'Next Round'
                 break
 
@@ -188,11 +171,6 @@ def adjustTable(positions, actions, pot_in_bets):
         else:
             i += 1
 
-    print("\nAjuste de mesa en cambio de ronda a POSTFLOP")
-    print(positions_arranged)
-    print(actions_arranged)
-    print(pot_in_bets_arranged)
-
     return positions_arranged, actions_arranged, pot_in_bets_arranged
         
 def deal_community_cards():
@@ -208,4 +186,3 @@ def deal_community_cards():
         fifthCard = input(f"\nCarta comunitaria de la ronda RIVER: ").upper()
         communityCards.append(fifthCard)
         table_info.poker["Community cards"] = communityCards
-    print(communityCards)
