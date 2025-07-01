@@ -54,3 +54,5 @@ Una vez introducido, el programa deberá tardar unos 20 segundos la primera vez 
 4. El usuario debera repetir el proceso hasta que se termine la partida. Ya sea por que quede un jugador en la partida o haya u showdown en la ronda final.
 
 - Como alternativa en caso de que el usuario no quiera poner los datos de una partida en la que no participa, puede detener el programa y volver a ejecutarlo cuando empiece una nueva partida.
+
+5. Finalmente, el usuario deberá proporcionar al sistema la información de las cartas comunitarias mostradas al inicio de las rondas POSTFLOP, TURN y RIVER.
