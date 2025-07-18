@@ -1,4 +1,5 @@
-from Logic.Algorithms.Bayesian_Network import Network
+# from Logic.Algorithms.Bayesian_Network import Network
+from Logic.Algorithms.Network_Improvement import PokerBayesianNetwork
 from Objects.Table.Table import Table
 
 GAME_ROUNDS = ["PREFLOP", "POSTFLOP", "TURN", "RIVER"]
@@ -8,6 +9,7 @@ positions_arranged = []
 actions_arranged = []
 pot_in_bets_arranged = []
 communityCards = []
+model = PokerBayesianNetwork.entrenar_desde_csv("./Logic/data/poker_dataset_realista.csv")
 
 def roundDecisions(num_players, blinds, user_position, players_pockets, user_hand, positions, actions, pot_in_bets, round_bets):
     global table_info
@@ -27,8 +29,8 @@ def playerAction(num_players, blinds, user_position, players_pockets, user_hand,
 
     for i in range(0, num_players):
         if (positions[i] == user_position):
-            bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
-            bynet.result_network()
+            bynet = PokerBayesianNetwork(user_position, players_pockets[user_position], blinds, user_hand, players_left, model)
+            bynet.print_results()
         bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
         
         actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
@@ -121,8 +123,8 @@ def roundResult(pot_in_bets, actions, players_left, blinds, user_position, playe
         for i in range(0, len(actions)):
             if pot_in_bets[i] < max(pot_in_bets) and actions[i] != "FOLD":
                 if (positions[i] == user_position):
-                    bynet = Network(user_position, players_pockets[user_position], blinds, user_hand, players_left)
-                    bynet.result_network()
+                    bynet = PokerBayesianNetwork(user_position, players_pockets[user_position], blinds, user_hand, players_left, model)
+                    bynet.print_results()
                 bet = input(f"\nCantidad de apuesta (vacío - FOLD) de la posicion: {positions[i]}: ")
                 actions, pot_in_bets, players_left, round_bets = decisionResult(bet, actions, pot_in_bets, blinds, players_left, i, positions, round_bets)
                 print(pot_in_bets, ' | ', actions)
