@@ -81,8 +81,8 @@ def decisionResult(bet, actions, pot_in_bets, blinds, players_left, index, posit
                 print(f"Ha raiseado la posición: {positions[index]}.")
             elif round(float(bet) + pot_in_bets[index], 2) == max_bet:
                 pot_in_bets[index] = round(pot_in_bets[index] + float(bet), 2)
-                actions[index] = "CALL"
-                print(f"Ha calleado la posición: {positions[index]}.") 
+                actions[index] = "LIMP"
+                print(f"Ha limpeado la posición: {positions[index]}.") 
             else:
                 raise ValueError("La apuesta realizada no es valida.")  
         else:

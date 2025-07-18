@@ -57,25 +57,25 @@ class Network:
 
     def network(self):
         modelo = BayesianNetwork([
-            ('CartasUsuario', 'DecisionUsuario'),
-            ('JugadoresActivos', 'DecisionUsuario'),
-            ('Ciegas', 'DecisionUsuario'),
-            ('PosicionUsuario', 'DecisionUsuario')
+            ('HandStrength', 'WinProbability'),
+            ('ActivePlayers', 'WinProbability'),
+            ('ChipsInBlinds', 'WinProbability'),
+            ('UserPosition', 'WinProbability')
         ])
 
-        cpd_cartas_usuario = TabularCPD(variable='CartasUsuario', variable_card=3, values=[[0.3], [0.4], [0.3]])
-        cpd_jugadores_activos = TabularCPD(variable='JugadoresActivos', variable_card=3, values=[[0.2], [0.5], [0.3]])
-        cpd_ciegas = TabularCPD(variable='Ciegas', variable_card=2, values=[[0.5], [0.5]])
-        cpd_posicion_usuario = TabularCPD(variable='PosicionUsuario', variable_card=3, values=[[0.33], [0.34], [0.33]])
+        cpd_cartas_usuario = TabularCPD(variable='HandStrength', variable_card=3, values=[[0.3], [0.4], [0.3]])
+        cpd_jugadores_activos = TabularCPD(variable='ActivePlayers', variable_card=3, values=[[0.2], [0.5], [0.3]])
+        cpd_ciegas = TabularCPD(variable='ChipsInBlinds', variable_card=2, values=[[0.5], [0.5]])
+        cpd_posicion_usuario = TabularCPD(variable='UserPosition', variable_card=3, values=[[0.33], [0.34], [0.33]])
 
         num_combinations = 3 * 3 * 2  * 3  
         values = np.random.rand(3, num_combinations)  
         values /= values.sum(axis=0)
 
         cpd_decision_usuario = TabularCPD(
-            variable='DecisionUsuario', variable_card=3,
+            variable='WinProbability', variable_card=3,
             values=values,
-            evidence=['CartasUsuario', 'JugadoresActivos', 'Ciegas', 'PosicionUsuario'], 
+            evidence=['HandStrength', 'ActivePlayers', 'ChipsInBlinds', 'UserPosition'], 
             evidence_card=[3, 3, 2, 3]
         )
 
@@ -91,11 +91,11 @@ class Network:
         inferencia = VariableElimination(modelo)
 
         resultado = inferencia.query(
-        variables=['DecisionUsuario'], 
-        evidence={'CartasUsuario': potencial_mano, 
-                'JugadoresActivos': total_players, 
-                'Ciegas': ciegas_tipo, 
-                'PosicionUsuario': posicion}
+        variables=['WinProbability'], 
+        evidence={'HandStrength': potencial_mano, 
+                'ActivePlayers': total_players, 
+                'ChipsInBlinds': ciegas_tipo, 
+                'UserPosition': posicion}
         )
 
         return resultado
@@ -105,7 +105,7 @@ class Network:
         acciones = ['Fold', 'Check/Call', 'Raise']
         print("\nLas probabilidades de las jugadas son:")
         print("+--------------------+------------------------+")
-        print("| DecisionUsuario    |   phi(DecisionUsuario) |")
+        print("| WinProbability    |   phi(WinProbability) |")
         print("+====================+========================+")
         for i, accion in enumerate(acciones):
             print(f"| {accion:<18} | {resultado.values[i]:>22.4f} |")
