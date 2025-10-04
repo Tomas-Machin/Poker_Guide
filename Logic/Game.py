@@ -21,8 +21,9 @@ class PokerGame:
                 self.table.poker["Positions"][position]["Chips"] = self.players_pockets[position]
 
     def start_game(self):
-        self.deck.shuffle()
+        self.deck.shuffle() # NO INFLUYE EN NADA ACUALMENTE
         self.deal_cards_and_assign_money()
+        self.game_information()
 
     def game_information(self):
         print("\nCartas del jugador usuario:")
