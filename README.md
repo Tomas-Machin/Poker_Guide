@@ -23,7 +23,7 @@ Características:
 Clona el repositorio y navega al directorio:
 
 ```bash
-git https://github.com/Tomas-Machin/Poker_Guide.git
+git clone https://github.com/Tomas-Machin/Poker_Guide.git
 cd Poker_Guide
 ```
 
